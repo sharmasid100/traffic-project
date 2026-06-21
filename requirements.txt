@@ -1,0 +1,10 @@
+jupyterlab==4.2.5
+flask==3.0.3
+tqdm==4.66.5
+ultralytics==8.4.70
+opencv-python==4.10.0.84
+pandas==2.2.2
+matplotlib==3.9.2
+scikit-learn==1.5.1
+PyYAML==6.0.2
+numpy==1.26.4
