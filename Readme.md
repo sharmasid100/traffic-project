@@ -124,11 +124,6 @@ traffic-violation-system/
 │   ├── triple_weights.pt
 │   └── license_weights.pt
 │
-├── datasets/
-│   ├── vehicle_dataset/
-│   ├── helmet_dataset/
-│   ├── triple_dataset/
-│   └── license_plate_dataset/
 │
 ├── notebooks/
 │   ├── vehicle_training.ipynb
