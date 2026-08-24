@@ -1,6 +1,0 @@
-timestamp,image_name,vehicle_type,plate_number,helmet_violation,triple_violation,evidence_image
-2026-06-21 17:22:02.171297,helmet_1.png,motorcycle,LER997,TRUE,FALSE,outputs/evidence\helmet_1_helmet.png
-2026-06-21 17:22:02.795422,triple_1.png,motorcycle,UP16Y545,TRUE,TRUE,outputs/evidence\triple_1_helmet_triple.png
-2026-06-21 17:22:03.184936,violation_1.png,motorcycle,UNKN0WN,TRUE,TRUE,outputs/evidence\violation_1_helmet_triple.png
-2026-06-21 17:22:03.521170,violation_1.png,motorcycle,UNKN0WN,TRUE,TRUE,outputs/evidence\violation_1_helmet_triple.png
-2026-06-21 17:22:03.920026,violation_1.png,motorcycle,UNKN0WN,TRUE,FALSE,outputs/evidence\violation_1_helmet.png
