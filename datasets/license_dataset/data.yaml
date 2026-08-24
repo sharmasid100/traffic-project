@@ -1,6 +1,0 @@
-path: C:\Users\Siddharth\Desktop\local\flipkart\Round2\dataset\license_plate_yolo
-train: train/images
-val: val/images
-nc: 1
-names:
-- licenseplate
