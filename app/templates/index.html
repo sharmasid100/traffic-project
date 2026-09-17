@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Traffic Violation Dashboard</title>
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <header>
+    <h1>Traffic Violation Dashboard</h1>
+    <p class="subtitle">Signed in as {{ user }}</p>
+  </header>
+  <section class="cards">
+    <article class="card"><strong>{{ total_records }}</strong><span>Total records</span></article>
+    <article class="card"><strong>{{ helmet_count }}</strong><span>Helmet violations</span></article>
+    <article class="card"><strong>{{ triple_count }}</strong><span>Triple riding</span></article>
+    <article class="card"><strong>{{ unique_vehicles }}</strong><span>Unique plates</span></article>
+    <article class="card"><strong>{{ queued_jobs }}</strong><span>Jobs in flight</span></article>
+  </section>
+  {% if records|length == 0 %}
+    <p class="empty">No violations detected yet. POST an image to /v1/jobs/images.</p>
+  {% else %}
+  <table>
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Camera</th>
+        <th>Vehicle</th>
+        <th>Plate</th>
+        <th>Type</th>
+        <th>Helmet</th>
+        <th>Triple</th>
+        <th>Evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in records %}
+      <tr>
+        <td>{{ row.timestamp }}</td>
+        <td>{{ row.camera_id }}</td>
+        <td>{{ row.vehicle_type }}</td>
+        <td>{{ row.plate_number }}</td>
+        <td>{{ row.violation_type }}</td>
+        <td>{{ row.helmet_violation }}</td>
+        <td>{{ row.triple_violation }}</td>
+        <td>
+          {% if row.evidence_url %}
+          <a class="btn" href="{{ row.evidence_url }}" target="_blank" rel="noopener">View</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</body>
+</html>

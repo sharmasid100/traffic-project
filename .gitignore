@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.env
+data/
+models/*.pt
+*.zip
+.DS_Store
+.coverage
+htmlcov/
+dist/
+*.egg-info/

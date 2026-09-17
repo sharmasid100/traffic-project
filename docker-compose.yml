@@ -1,0 +1,81 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: traffic
+      POSTGRES_PASSWORD: traffic
+      POSTGRES_DB: traffic
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U traffic -d traffic"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    image: traffic-violation-system:local
+    environment:
+      DATABASE_URL: postgresql+psycopg://traffic:traffic@postgres:5432/traffic
+      REDIS_URL: redis://redis:6379/0
+      QUEUE_BACKEND: redis
+      STORAGE_BACKEND: local
+      DATA_DIR: /data
+      PUBLIC_BASE_URL: http://localhost:8000
+      API_KEY: ${API_KEY:-change-me}
+      DASHBOARD_USER: ${DASHBOARD_USER:-admin}
+      DASHBOARD_PASSWORD: ${DASHBOARD_PASSWORD:-change-me}
+      DETECTOR_BACKEND: ${DETECTOR_BACKEND:-mock}
+      OCR_BACKEND: ${OCR_BACKEND:-mock}
+      MODEL_DIR: /app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - media_data:/data
+      - ./models:/app/models
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  worker:
+    image: traffic-violation-system:local
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://traffic:traffic@postgres:5432/traffic
+      REDIS_URL: redis://redis:6379/0
+      QUEUE_BACKEND: redis
+      STORAGE_BACKEND: local
+      DATA_DIR: /data
+      DETECTOR_BACKEND: ${DETECTOR_BACKEND:-mock}
+      OCR_BACKEND: ${OCR_BACKEND:-mock}
+      MODEL_DIR: /app/models
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - media_data:/data
+      - ./models:/app/models
+    entrypoint: ["/docker-entrypoint.sh"]
+    command: ["python", "-m", "app.worker"]
+
+volumes:
+  postgres_data:
+  redis_data:
+  media_data:

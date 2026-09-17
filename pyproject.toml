@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "traffic-violation-system"
+version = "1.0.0"
+description = "Production traffic violation detection, ANPR, and evidence platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+  "fastapi==0.115.6",
+  "uvicorn[standard]==0.32.1",
+  "sqlalchemy==2.0.36",
+  "psycopg[binary]==3.2.3",
+  "alembic==1.14.0",
+  "pydantic-settings==2.6.1",
+  "python-multipart==0.0.19",
+  "redis==5.2.1",
+  "rq==2.0.0",
+  "boto3==1.35.81",
+  "opencv-python-headless==4.10.0.84",
+  "numpy==1.26.4",
+  "jinja2==3.1.4",
+  "httpx==0.28.1",
+  "structlog==24.4.0",
+]
+
+[project.optional-dependencies]
+ml = [
+  "ultralytics==8.3.40",
+  "easyocr==1.7.2",
+]
+dev = [
+  "pytest==8.3.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/sharmasid100/traffic-violation-system"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["templates/*", "static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
