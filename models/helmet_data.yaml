@@ -1,6 +1,0 @@
-names:
-  0: With Helmet
-  1: Without Helmet
-path: C:\Users\Siddharth\Desktop\local\flipkart\Round2\notebooks\helmet_yolo_dataset
-train: train/images
-val: val/images
